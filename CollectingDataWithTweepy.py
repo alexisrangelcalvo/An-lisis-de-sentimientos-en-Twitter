@@ -9,7 +9,7 @@ import numpy as np
 from IPython.display import display
 import matplotlib.pyplot as plt
 import seaborn as sns
-%matplotlib inline
+# %matplotlib inline
 
 # Autenticando la api y credenciales de Twitter
 # "Client_Tw.csv" es el nombre del archivo csv separado por columnas con el nombre de la llave, y en primer fila la llave
@@ -51,7 +51,7 @@ def searchTweets_cu(query, geocode='24.01362,-104.67530,400km', nitems=1000, to_
     # csv_name, el nombre para guardar el archivo en el formato deseado (usualmente csv)
 
     simple_list = []
-    for tweet in tweepy.Cursor(API.search_tweets, q=query, geocode='24.01362,-104.67530,300km').items(nitems):
+    for tweet in tweepy.Cursor(API.search, q=query, geocode='24.01362,-104.67530,300km').items(nitems):
         simple_list.append([tweet.text, tweet.created_at, tweet.favorite_count, tweet.retweet_count,
                            tweet.user.location, [h['text'] for h in tweet.entities['hashtags']]])
     simple_list = pd.DataFrame(simple_list, columns=[
@@ -68,4 +68,9 @@ def searchTweets_cu(query, geocode='24.01362,-104.67530,400km', nitems=1000, to_
 
 
 # Finalmente, aqui especificamos los parametros para realizar la busqueda
-searchTweets_cu(query="@EVillegasV", to_csv=True, csv_name="@EVCG_D30.csv")
+searchTweets_cu(query="skin care", to_csv=True,
+                csv_name="skin care")
+
+
+# Puedes consultar aqui los demas metodos existentes para Cursor (Existe una nueva version llamada Paginator, para la cual no es apto este codigo)
+# https://docs.tweepy.org/en/v3.5.0/api.html
